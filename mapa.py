@@ -1,6 +1,11 @@
 from pyray import *
 from raylib import *
-"""#TODO: metodo que dibuje un mapa a partir de la clase tablero"""
+"""TODO: metodo que dibuje un mapa a partir de la clase tablero
+TODO: ver como implementar los dos mapas en una sola ventana
+TODO: hacer un menu para elstate 0
+TODO: dibujar barcos cerca del mapa
+TODO: agregar perifericos (raton y teclado)"""
+
 
 class Mapa:
     # rectangle_width=int(min(get_screen_height(),get_screen_width())/12)
@@ -14,7 +19,19 @@ class Mapa:
         map_position_x,map_position_y=self.rectangle_width,self.rectangle_width
         for i in range (10):
             for j in range (10):
+
                 draw_rectangle(map_position_x+self.rectangle_width*j,map_position_y+i*self.rectangle_width,self.rectangle_width,self.rectangle_width,BLUE)
+                draw_rectangle_lines(map_position_x+self.rectangle_width*j,map_position_y+self.rectangle_width*i,self.rectangle_width,self.rectangle_width,RED)
+
+    def mapa_juego(self, casillas :[int])->None:
+        """Dibuja el mapa durante el juego"""
+        map_position_x,map_position_y=self.rectangle_width,self.rectangle_width
+        for i in range (10):
+            for j in range (10):
+                casilla=j+i*10
+                if casillas[casilla]=="Water": Colour = BLUE
+                else: Colour = GRAY
+                draw_rectangle(map_position_x+self.rectangle_width*j,map_position_y+i*self.rectangle_width,self.rectangle_width,self.rectangle_width,Colour)
                 draw_rectangle_lines(map_position_x+self.rectangle_width*j,map_position_y+self.rectangle_width*i,self.rectangle_width,self.rectangle_width,RED)
 
     def dibuja_disparo(self,casilla: int, resultado:str)->None:
@@ -41,34 +58,34 @@ class Mapa:
                 self.dibuja_disparo(casilla+i*10,"barco")
 
 if __name__=="__main__":
-    mapa=Mapa(960,960)
+    mapa_usuario=Mapa(960,960)
     # state=0
     while not window_should_close():
         if(is_key_pressed(KEY_SPACE)):
-            mapa.state=1
+            mapa_usuario.state=1
         if(is_key_pressed(KEY_R)):
-            mapa.state=2
+            mapa_usuario.state=2
         # if(is_key_pressed(KEY_R)):
         
 
         begin_drawing()
         # clear_background(RAYWHITE)
-        if mapa.state==0:
-            mapa.mapa_inicial()
-        elif mapa.state==1:
-            mapa.dibuja_barco(3,10,"derecha")
-            mapa.dibuja_barco(4,45,"abajo")
+        if mapa_usuario.state==0:
+            mapa_usuario.mapa_inicial()
+        elif mapa_usuario.state==1:
+            mapa_usuario.dibuja_barco(3,10,"derecha")
+            mapa_usuario.dibuja_barco(4,45,"abajo")
             "dibujar los barcos aleatoriamente"
-        elif mapa.state==2:
+        elif mapa_usuario.state==2:
             "dibuja los disparos"
-            # mapa_inicial()
-            mapa.dibuja_disparo(0,"boom")
-            mapa.dibuja_disparo(33,"boom")
-            mapa.dibuja_disparo(60,"boom")
-            mapa.dibuja_disparo(99,"boom")
-            mapa.dibuja_disparo(100,"boom")
-            mapa.dibuja_disparo(1,"boom")
-        elif mapa.state==3:
+            # mapa_usuario_inicial()
+            mapa_usuario.dibuja_disparo(0,"boom")
+            mapa_usuario.dibuja_disparo(33,"boom")
+            mapa_usuario.dibuja_disparo(60,"boom")
+            mapa_usuario.dibuja_disparo(99,"boom")
+            mapa_usuario.dibuja_disparo(100,"boom")
+            mapa_usuario.dibuja_disparo(1,"boom")
+        elif mapa_usuario.state==3:
             "nada"
 
     # framesCounter=0

@@ -5,9 +5,10 @@ los disparos se deben de escribir en tablero
 y los barcos se deben de guardar tambien"""
 
 if __name__=="__main__":
-    battleship=flota(100,"Water")
+    Usuario=flota(100,"Water")
+    computer=flota(100,"Water")
     mapa=Mapa(960,960)
-
+    
     while not window_should_close():
         
         if(is_key_pressed(KEY_SPACE)):
